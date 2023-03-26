@@ -10,16 +10,14 @@ import java.util.List;
 @Repository
 public class ProductRepository extends CrudRepository<Product> {
 
-
     public List<Product> findByName(String productName) {
         List<Product> productResult = new ArrayList<>();
 
         for (Product p : database) {
-            if (p.getName().equals(productName)) {
+            if (p.getName().contains(productName)) {
                 productResult.add(p);
             }
         }
-
         return productResult;
     }
 }

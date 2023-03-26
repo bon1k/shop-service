@@ -2,18 +2,21 @@ package ru.shop.shopservice.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.shop.shopservice.dto.LongIdDto;
+import ru.shop.shopservice.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class CrudRepository<T extends LongIdDto> implements ICrudRepository<T> {
+public abstract class CrudRepository<T extends LongIdDto> implements ICrudRepository<T> {
 
     List<T> database = new ArrayList<T>();
+    private Long idSequence = 0L;
 
 
     @Override
     public T save(T dtoToSave) {
+        dtoToSave.setId(++idSequence);
         database.add(dtoToSave);
         return dtoToSave;
     }
@@ -37,7 +40,7 @@ public class CrudRepository<T extends LongIdDto> implements ICrudRepository<T> {
                 return dto;
             }
         }
-        throw new RuntimeException("This id " + id + " is not in the database");
+        throw new NotFoundException();
     }
 }
 

@@ -3,7 +3,7 @@ package ru.shop.shopservice.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.shop.shopservice.dto.Product;
-import ru.shop.shopservice.service.ProductService;
+import ru.shop.shopservice.service.IProductService;
 
 import java.util.List;
 
@@ -13,11 +13,21 @@ public class ProductController {
 
 
     @Autowired
-    private ProductService productService;
+    private IProductService productService;
 
-    @PostMapping()
+    @PostMapping
     public Product save(@RequestBody Product product) {
         return productService.save(product);
+    }
+
+    @PutMapping
+    public Product update(@RequestBody Product product) {
+        return productService.update(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        productService.delete(id);
     }
 
     @GetMapping("/{id}")
@@ -29,5 +39,7 @@ public class ProductController {
     public List<Product> findByName(@RequestParam String name) {
         return productService.findByName(name);
     }
+
+
 
 }
