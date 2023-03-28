@@ -2,10 +2,10 @@ package ru.shop.shopservice.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.shop.shopservice.dto.BaseUser;
+import ru.shop.shopservice.exception.NotFoundException;
 
 @Repository
-public abstract class UserRepository<T extends BaseUser> extends CrudRepository<T> {
-
+public abstract class UserRepository<T extends BaseUser> extends CrudRepository<T> implements IUserRepository<T> {
 
     public T findByUserByLogin(String searchLogin) {
         for (T user : database) {
@@ -13,6 +13,6 @@ public abstract class UserRepository<T extends BaseUser> extends CrudRepository<
                 return user;
             }
         }
-        return null;
+        throw new NotFoundException();
     }
 }

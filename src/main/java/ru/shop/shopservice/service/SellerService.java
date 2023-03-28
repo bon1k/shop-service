@@ -1,22 +1,52 @@
 package ru.shop.shopservice.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.shop.shopservice.dto.Seller;
-import ru.shop.shopservice.repository.ICrudRepository;
+import ru.shop.shopservice.repository.ISellerRepository;
 
 @Service
-public class SellerService extends CrudService<Seller> {
+public class SellerService extends UserService<Seller> implements ISellerService {
 
-
-    private ICrudRepository crudRepository;
+    @Autowired
+    private ISellerRepository sellerRepository;
 
     @Override
-    public ICrudRepository getRepository() {
-        return crudRepository;
+    public Seller save(Seller dtoToSave) {
+        return null;
     }
 
     @Override
-    public void validate(Seller seller) {
+    public Seller update(Seller dtoToUpdate) {
+        return null;
+    }
 
+    @Override
+    public void delete(Long id) {
+
+    }
+
+    @Override
+    public Seller get(Long id) {
+        return null;
+    }
+
+    @Override
+    public Seller login(String login, String password) {
+        return null;
+    }
+
+    @Override
+    public boolean register(String login, String password) {
+        Seller seller = new Seller();
+        seller.setLogin(login);
+        seller.setPassword(password);
+        sellerRepository.save(seller);
+        return true;
+    }
+
+    @Override
+    public Seller findByOrganization(String organizationName) {
+        return null;
     }
 }

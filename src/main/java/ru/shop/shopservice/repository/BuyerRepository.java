@@ -7,5 +7,9 @@ import ru.shop.shopservice.dto.Buyer;
 public class BuyerRepository extends UserRepository<Buyer> {
 
 
+    @Override
+    public Buyer getUserByLogin(String searchLogin) {
+        return null;
+    }
 }
 
