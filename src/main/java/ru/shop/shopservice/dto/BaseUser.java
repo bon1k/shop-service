@@ -3,6 +3,7 @@ package ru.shop.shopservice.dto;
 public abstract class BaseUser extends LongIdDto {
 
     private String login;
+
     private String password;
 
     private UserType userType;

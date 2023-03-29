@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class CrudRepository<T extends LongIdDto> implements ICrudRepository<T> {
 
     List<T> database = new ArrayList<T>();
-    private Long idSequence;
+    private Long idSequence = 0L;
 
     @Override
     public T save(T dtoToSave) {

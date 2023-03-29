@@ -5,7 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDetails {
-    private String name;
+public class RegistrationDto {
     private String login;
+    private String password;
+    private String passwordCheck;
+
+
 }
