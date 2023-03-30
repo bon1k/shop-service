@@ -1,14 +1,29 @@
 package ru.shop.shopservice.repository;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import ru.shop.shopservice.annotation.Table;
 import ru.shop.shopservice.dto.LongIdDto;
-import ru.shop.shopservice.exception.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Slf4j
 public abstract class CrudRepository<T extends LongIdDto> implements ICrudRepository<T> {
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    abstract RowMapper<T> getRowMapper();
+
+    private Class<T> classType;
+
+    public CrudRepository(Class<T> classType) {
+        this.classType = classType;
+    }
 
     List<T> database = new ArrayList<T>();
     private Long idSequence = 0L;
@@ -34,12 +49,14 @@ public abstract class CrudRepository<T extends LongIdDto> implements ICrudReposi
 
     @Override
     public T findOne(Long id) {
-        for (T dto : database) {
-            if (dto.getId().equals(id)) {
-                return dto;
-            }
-        }
-        throw new NotFoundException();
+        log.info("findOne");
+        String sql = "SELECT id, name, description FROM " + getTableName() + " WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, getRowMapper(), id);
+    }
+
+    private String getTableName() {
+        Table annotation = classType.getAnnotation(Table.class);
+        return annotation.name();
     }
 }
 

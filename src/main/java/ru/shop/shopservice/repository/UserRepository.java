@@ -7,6 +7,10 @@ import ru.shop.shopservice.exception.NotFoundException;
 @Repository
 public abstract class UserRepository<T extends BaseUser> extends CrudRepository<T> implements IUserRepository<T> {
 
+    public UserRepository(Class<T> classType) {
+        super(classType);
+    }
+
     public T findByUserByLogin(String searchLogin) {
         for (T user : database) {
             if (user.getLogin().equalsIgnoreCase(searchLogin)) {

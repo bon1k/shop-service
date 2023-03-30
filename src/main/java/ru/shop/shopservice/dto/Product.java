@@ -1,10 +1,21 @@
 package ru.shop.shopservice.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import ru.shop.shopservice.annotation.Table;
+
+import java.math.BigDecimal;
+
+@Table(name = "product")
+@Getter
+@Setter
 public class Product extends LongIdDto {
 
     private String name;
     private String description;
     private Long sellerId;
+
+    private BigDecimal price;
 
     @Override
     public String toString() {
@@ -13,30 +24,5 @@ public class Product extends LongIdDto {
                 ", description='" + description + '\'' +
                 ", sellerId=" + sellerId +
                 '}';
-    }
-
-    public Long getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(Long sellerId) {
-        this.sellerId = sellerId;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }
